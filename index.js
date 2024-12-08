@@ -140,7 +140,7 @@ io.on('connection', socket => {
         const fileName = `chat_export_${room}_${new Date().toISOString().replace(/[:]/g, '-')}.txt`;
     
         // Save the file on the server using fs module
-        fs.writeFileSync(path.join(__dirname, 'exports', fileName), messagesText);
+        fs.writeFileSync(fileName, messagesText);
     
         // Send the file name and content back to the client
         socket.emit('fileExport', { fileName, content: messagesText });
