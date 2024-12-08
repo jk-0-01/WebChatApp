@@ -1,6 +1,6 @@
 # WebChatApp
 <h2>Steps to run:</h2> 
-<h3>As a web service online</h3>
+<h3>As a web service</h3>
 <p>Clone this repository, create a <a href="https://render.com/">Render</a> account with your Github account and follow the preceeding steps:</p>
 <ol>
     <li>Click on "+ New" on the top right.
