@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,25 +14,27 @@
 
 <body>
     <main>
-        <form class="form-join">
-            <input type="text" id="name" maxlength="15" placeholder="Your name" size="5" required>
-            <input type="text" id="room" placeholder="Chat room" size="5" required>
-            <button id="join" type="submit">Join</button>
-        </form>
+        <!-- <div id="message-area"> -->
+            <form class="form-join">
+                <input type="text" id="name" maxlength="15" placeholder="Your name" size="5" required>
+                <input type="text" id="room" placeholder="Chat room" size="5" required>
+                <button id="join" type="submit">Join</button>
+            </form>
 
-        <ul class="chat-display"></ul>
+            <ul class="chat-display"></ul>
 
-        <p class="user-list"></p>
+            <p class="user-list"></p>
 
-        <p class="room-list"></p>
+            <p class="room-list"></p>
 
-        <p class="activity"></p>
+            <p class="activity"></p>
 
-        <form class="form-msg">
-            <input type="text" id="message" placeholder="Your message" required>
-            <button type="submit">Send</button>
-        </form>
-        <button id="export">Export Messages</button>
+            <form class="form-msg" style="display: inline-block">
+                <input type="text" id="message" placeholder="Your message" required>
+                <button id="send" type="submit">Send</button>
+            </form>
+            <button id="export">Export Messages</button>
+        <!-- </div> -->
     </main>
 </body>
 
