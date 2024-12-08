@@ -2,6 +2,7 @@ import express from 'express'
 import { Server } from "socket.io"
 import path from 'path'
 import { fileURLToPath } from 'url'
+import fs from 'fs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -10,6 +11,8 @@ const PORT = process.env.PORT || 3500
 const ADMIN = "Admin"
 
 const app = express()
+
+let chatMessages = {}
 
 app.use(express.static(path.join(__dirname, "public")))
 
@@ -100,6 +103,11 @@ io.on('connection', socket => {
     socket.on('message', ({ name, text }) => {
         const room = getUser(socket.id)?.room
         if (room) {
+            if (!chatMessages[room]) {
+                chatMessages[room] = [];  // Initialize if this room hasn't been used yet
+            }
+            const newMessage = buildMsg(name, text);
+            chatMessages[room].push(newMessage);  // Save the message in the room's array
             io.to(room).emit('message', buildMsg(name, text))
         }
     })
@@ -111,6 +119,33 @@ io.on('connection', socket => {
             socket.broadcast.to(room).emit('activity', name)
         }
     })
+
+    // Export chat messages
+    socket.on('exportMessages', () => {
+        const user = getUser(socket.id);
+        if (!user) {
+            return socket.emit('message', buildMsg(ADMIN, 'Error: User not found.'));
+        }
+    
+        const room = user.room;
+        if (!chatMessages[room] || chatMessages[room].length === 0) {
+            return socket.emit('message', buildMsg(ADMIN, 'No messages to export in this room.'));
+        }
+    
+        // Format chat messages into a string
+        const messagesText = chatMessages[room]
+            .map(msg => `[${msg.time}] ${msg.name}: ${msg.text}`)
+            .join('\n');
+    
+        const fileName = `chat_export_${room}_${new Date().toISOString().replace(/[:]/g, '-')}.txt`;
+    
+        // Save the file on the server using fs module
+        fs.writeFileSync(path.join(__dirname, 'exports', fileName), messagesText);
+    
+        // Send the file name and content back to the client
+        socket.emit('fileExport', { fileName, content: messagesText });
+    });
+
 })
 
 function buildMsg(name, text) {
@@ -118,6 +153,9 @@ function buildMsg(name, text) {
         name,
         text,
         time: new Intl.DateTimeFormat('default', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
             hour: 'numeric',
             minute: 'numeric',
             second: 'numeric'

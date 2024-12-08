@@ -1,4 +1,4 @@
-const socket = io('https://webchatapp-3eqo.onrender.com/')
+const socket = io('ws://localhost:3500')
 
 const msgInput = document.querySelector('#message')
 const nameInput = document.querySelector('#name')
@@ -46,8 +46,8 @@ socket.on("message", (data) => {
     const { name, text, time } = data
     const li = document.createElement('li')
     li.className = 'post'
-    if (name === nameInput.value) li.className = 'post post--left'
-    if (name !== nameInput.value && name !== 'Admin') li.className = 'post post--right'
+    if (name === nameInput.value) li.className = 'post post--right'
+    if (name !== nameInput.value && name !== 'Admin') li.className = 'post post--left'
     if (name !== 'Admin') {
         li.innerHTML = `<div class="post__header ${name === nameInput.value
             ? 'post__header--user'
@@ -73,8 +73,27 @@ socket.on("activity", (name) => {
     clearTimeout(activityTimer)
     activityTimer = setTimeout(() => {
         activity.textContent = ""
-    }, 3000)
+    }, 1000)
 })
+
+// Export Messages button listener
+document.querySelector('#export').addEventListener('click', () => {
+    socket.emit('exportMessages')
+})
+
+// Handle exported file
+socket.on('fileExport', ({ fileName, content }) => {
+    if (!content) {
+        alert('No messages to export.');
+        return;
+    }
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+});
 
 socket.on('userList', ({ users }) => {
     showUsers(users)
