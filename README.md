@@ -25,6 +25,7 @@
     <li>Install the Live Server extension by Ritwick Dey.
     <li>Open the folder with the downloaded files in VSCode or with VSCode.
     <li>Open the terminal and type the following: <strong>npm i -D nodemon</strong>, <strong>npm i socket.io</strong>, and <strong>npm i express</strong> to add the required dependencies.
+    <li>Open your <strong>index.html</strong> and change the first line -> const socket = io(<strong>'ws://localhost:3500'</strong>).
     <li>Type <strong>npm run dev</strong> in the terminal to start the web app.
-    <li>Open your <strong>index.html</strong> and click, "Open with Live Server".
+    <li>Right click in your <strong>index.html</strong> and choose, "Open with Live Server".
 </ol>
