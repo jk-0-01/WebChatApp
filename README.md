@@ -1,7 +1,7 @@
-# WebChatApp <i>following Dave Gray's "<a href="https://youtube.com/playlist?list=PL0Zuz27SZ-6NOkbTDxKi7grs_oxJhLu07&si=YFXS_U45KZEBcAfx" target="_blank">Building a Chat App</a>" playlist</i>
+# WebChatApp <i>following Dave Gray's <a href="https://youtube.com/playlist?list=PL0Zuz27SZ-6NOkbTDxKi7grs_oxJhLu07&si=YFXS_U45KZEBcAfx">Building a Chat App</a>" playlist</i>
 <h2>Steps to run:</h2> 
 <h3>As a web service</h3>
-<p>Clone this repository, create a <a href="https://render.com/" target="_blank">Render</a> account with your Github account and follow the preceeding steps:</p>
+<p>Clone this repository, create a <a href="https://render.com/">Render</a> account with your Github account and follow the preceeding steps:</p>
 <ol>
     <li>Click on "+ New" on the top right.
     <li>Choose "Web Service".
